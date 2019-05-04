@@ -36,7 +36,7 @@ target = ['quality']
 X = wine[features]
 y = wine[target]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=200)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=200)
 
 ###
 # Linear regression
@@ -44,13 +44,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 print('*' * 40)
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
-print regressor.coef_
+print(regressor.coef_)
 
 # Predict on test data
 y_prediction = regressor.predict(X_test)
 print(y_test[:5])
 print(y_prediction[:5])
-print y_test.describe()
+print(y_test.describe())
 
 fig = plt.figure(figsize=(10, 6))
 p1 = plt.plot(x=data_to_plotly(X_train.alcohol), y=y_train,
@@ -59,15 +59,19 @@ p2 = plt.plot(x=data_to_plotly(X_test.alcohol), y=y_prediction,
               marker='.')
 fig.show()
 
-# Evaluate Linear Regression accuracy using root-mean-square-error (RCSE) = 0,729
+# Evaluate Linear Regression accuracy using root-mean-square-error (RMSE) = 0,729
 # In linear regression, the outcome (dependent variable) is continuous.
 # It can have any one of an infinite number of possible values.
 # In logistic regression, the outcome (dependent variable) has only a limited number of possible values.
 RMSE = sqrt(mean_squared_error(y_true=y_test, y_pred=y_prediction))
 print(RMSE)
 
+y_test_arr = np.array(y_test)
+y_prediction_arr = np.array(y_prediction)
+RMSE_m = sum(abs(y_test_arr - np.around(y_prediction_arr))) / len(y_test_arr)
+print(RMSE_m)
 
-print '-------'
+print('-------')
 ###
 # Polynomial regression
 # Fit on train set
@@ -80,27 +84,31 @@ lg.fit(y_, X)
 predicted_data = lg.predict(y_test_)
 # predicted_data = np.round_(predicted_data)
 
-print (mean_squared_error(X_test, predicted_data))
-print lg.coef_
+print(mean_squared_error(X_test, predicted_data))
+print(lg.coef_)
 # print (predicted_data[:5])
-print '-------'
-
-
+print('-------')
 
 ###
-# Decision Tree: Fit a new regression model to the training set
+# Decision Tree
 # max_depth - the maximum depth of the tree
 print('*' * 40)
 regressor = DecisionTreeRegressor(max_depth=50)
 regressor.fit(X_train, y_train)
-print regressor.class_weight
+print(regressor.class_weight)
 
 y_prediction = regressor.predict(X_test)
-print y_test[:5]
-print y_prediction[:5]
-print y_test.describe()
+print(y_test[:5])
+print(y_prediction[:5])
+print(y_test.describe())
 
-# Evaluate Decision Tree Regression accuracy using root-mean-square-error (RCSE) = 0,813
-# less RCSE -> better model (Linear regression is better)
+# Evaluate Decision Tree Regression accuracy using root-mean-square-error (RMSE) = 0,813
+# less RMSE -> better model (Linear regression is better)
 RMSE = sqrt(mean_squared_error(y_true=y_test, y_pred=y_prediction))
 print(RMSE)
+
+y_test_arr = np.array(y_test)
+y_prediction_arr = np.array(y_prediction)
+RMSE_m = sum(abs((y_test_arr - y_prediction_arr))) / len(y_test_arr)
+print('---')
+# print(RMSE_m)
