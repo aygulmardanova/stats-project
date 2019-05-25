@@ -7,19 +7,8 @@ from sklearn.svm import SVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.model_selection import train_test_split
 
-# matplotlib inline
-
-# https://www.kaggle.com/vishalyo990/prediction-of-quality-of-wine
-# Different classifier models to predict the quality of the wine.
-# 1. Random Forest Classifier
-# 2. Stochastic Gradient Descent Classifier
-# 3. Support Vector Classifier(SVC)
-#
-# Then I use cross validation evaluation technique to optimize the model performance.
-# 1. Grid Search CV
-# 2. Cross Validation Score
 
 # Loading dataset
 wine = pd.read_csv('../input/winequality-white.csv', sep=';')
@@ -145,7 +134,7 @@ print(confusion_matrix(y_test, pred_rfc))
 sgd = SGDClassifier(penalty=None)
 sgd.fit(X_train, y_train)
 pred_sgd = sgd.predict(X_test)
-print sgd.coef_
+print(sgd.coef_)
 
 print(classification_report(y_test, pred_sgd))
 
@@ -197,3 +186,4 @@ print(confusion_matrix(y_test, pred_svc))
 # # Now lets try to do some evaluation for random forest model using cross validation.
 # rfc_eval = cross_val_score(estimator=rfc, X=X_train, y=y_train, cv=10)
 # print rfc_eval.mean()
+print('end')

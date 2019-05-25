@@ -165,4 +165,5 @@ print(classification_report(y_test, pred_svc2))
 
 # Now lets try to do some evaluation for random forest model using cross validation.
 rfc_eval = cross_val_score(estimator=rfc, X=X_train, y=y_train, cv=10)
-print rfc_eval.mean()
+print(rfc_eval.mean())
+print('end')
